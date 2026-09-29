@@ -1,44 +1,100 @@
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ha">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>othman jafar</title>
+  <title>Otheey Search</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background: #f5f5f5;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    .box {
+      background: white;
+      padding: 20px;
+      border-radius: 15px;
+      margin-bottom: 20px;
+    }
+
+    input, button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 10px;
+      box-sizing: border-box;
+    }
+
+    button {
+      background: black;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+    }
+
+    .photo {
+      margin-top: 15px;
+      background: white;
+      padding: 10px;
+      border-radius: 10px;
+    }
+
+    .photo img {
+      width: 100%;
+      border-radius: 10px;
+    }
+  </style>
 </head>
 
 <body>
-  <h1>othman jafar</h1>
 
-  <input type="text" id="search" placeholder="Search...">
+  <h1>Otheey Search</h1>
 
-  <div id="results"></div>
+  <div class="box">
+    <h2>📷 Ajiye Hoto</h2>
+
+    <input type="file" id="photoInput" accept="image/*">
+
+    <button onclick="savePhoto()">Ajiye Hoto</button>
+  </div>
+
+  <div id="photos"></div>
 
   <script>
-    const items = [
-      "Abu na farko",
-      "Abu na biyu",
-      "Abu na uku"
-    ];
+    function savePhoto() {
+      const input = document.getElementById("photoInput");
+      const photos = document.getElementById("photos");
 
-    const search = document.getElementById("search");
-    const results = document.getElementById("results");
+      if (input.files.length === 0) {
+        alert("Da fatan zaɓi hoto.");
+        return;
+      }
 
-    function showResults() {
-      const word = search.value.toLowerCase();
+      const file = input.files[0];
+      const reader = new FileReader();
 
-      results.innerHTML = "";
+      reader.onload = function(e) {
+        const div = document.createElement("div");
+        div.className = "photo";
 
-      items
-        .filter(item => item.toLowerCase().includes(word))
-        .forEach(item => {
-          const p = document.createElement("p");
-          p.textContent = item;
-          results.appendChild(p);
-        });
+        div.innerHTML = `
+          <img src="${e.target.result}">
+          <button onclick="this.parentElement.remove()">🗑️ Goge Hoto</button>
+        `;
+
+        photos.appendChild(div);
+      };
+
+      reader.readAsDataURL(file);
     }
-
-    search.addEventListener("input", showResults);
-    showResults();
   </script>
+
 </body>
 </html>
