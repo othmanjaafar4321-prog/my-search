@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Saved Search</title>
+</head>
+
+<body>
+  <h1>My Saved Search</h1>
+
+  <input type="text" id="search" placeholder="Search...">
+
+  <div id="results"></div>
+
+  <script>
+    const items = [
+      "Abu na farko",
+      "Abu na biyu",
+      "Abu na uku"
+    ];
+
+    const search = document.getElementById("search");
+    const results = document.getElementById("results");
+
+    function showResults() {
+      const word = search.value.toLowerCase();
+
+      results.innerHTML = "";
+
+      items
+        .filter(item => item.toLowerCase().includes(word))
+        .forEach(item => {
+          const p = document.createElement("p");
+          p.textContent = item;
+          results.appendChild(p);
+        });
+    }
+
+    search.addEventListener("input", showResults);
+    showResults();
+  </script>
+</body>
+</html>
